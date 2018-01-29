@@ -4,6 +4,7 @@ var fs = require('fs');
 var os = require('os');
 var path = require('path');
 var rimraf = require('rimraf');
+var takeown = require('takeown');
 
 // added node .10
 // http://stackoverflow.com/questions/21698906/how-to-check-if-a-path-is-absolute-or-relative/30714706#30714706
@@ -158,10 +159,14 @@ var clean = function() {
     if (_this.options.dry !== true) {
       if (_this.options.exclude && excludedChildren.length) {
         childrenAfterExcluding.forEach(function(child) {
-          rimraf.sync(child);
+          takeown(child, function() {
+            rimraf.sync(child);
+          });
         });
       } else {
-        rimraf.sync(rimrafPath);
+        takeown(rimrafPath, function() {
+          rimraf.sync(rimrafPath);
+        });
       }
     }
 
