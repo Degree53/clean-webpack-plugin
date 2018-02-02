@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "rimraf": "^2.6.1",
-    "takeown": "^1.1.0"
+    "takeown": "^1.2.0"
   },
   "devDependencies": {
     "chai": "^4.1.1",
