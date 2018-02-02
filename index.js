@@ -157,27 +157,23 @@ var clean = function() {
     }
 
     if (_this.options.dry !== true) {
-      if (_this.options.exclude && excludedChildren.length) {
-        childrenAfterExcluding.forEach(function(child) {
-          takeown(child, function() {
+      takeown(rimrafPath, function() {
+        if (_this.options.exclude && excludedChildren.length) {
+          childrenAfterExcluding.forEach(function (child) {
             rimraf.sync(child);
           });
-        });
-      } else {
-        takeown(rimrafPath, function() {
+        } else {
           rimraf.sync(rimrafPath);
-        });
-      }
+        }
+        _this.options.verbose &&
+          console.warn('clean-webpack-plugin: ' + rimrafPath + ' has been removed.');
+        _this.options.verbose && excludedChildren.length &&
+          console.warn('clean-webpack-plugin: ' + excludedChildren.length + ' file(s) excluded - ' + excludedChildren.join(', '));
+        excludedChildren.length ?
+          results.push({ path: rimrafPath, output: 'removed with exclusions (' + excludedChildren.length + ')' }) :
+          results.push({ path: rimrafPath, output: 'removed' });
+      });
     }
-
-    _this.options.verbose &&
-      console.warn('clean-webpack-plugin: ' + rimrafPath + ' has been removed.');
-    _this.options.verbose && excludedChildren.length &&
-      console.warn('clean-webpack-plugin: ' + excludedChildren.length + ' file(s) excluded - ' + excludedChildren.join(', '));
-
-    excludedChildren.length ?
-      results.push({ path: rimrafPath, output: 'removed with exclusions (' + excludedChildren.length + ')' }) :
-      results.push({ path: rimrafPath, output: 'removed' });
   });
 
   return results;
