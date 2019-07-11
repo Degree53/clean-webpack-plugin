@@ -166,9 +166,9 @@ var clean = function() {
           rimraf.sync(rimrafPath);
         }
         _this.options.verbose &&
-          console.warn('clean-webpack-plugin: ' + rimrafPath + ' has been removed.');
+          console.warn('clean-webpack-plugin: ' + rimrafPath + ' has been removed.\n');
         _this.options.verbose && excludedChildren.length &&
-          console.warn('clean-webpack-plugin: ' + excludedChildren.length + ' file(s) excluded - ' + excludedChildren.join(', '));
+          console.warn('clean-webpack-plugin: ' + excludedChildren.length + ' file(s) excluded - ' + excludedChildren.join(', ') + '\n');
         excludedChildren.length ?
           results.push({ path: rimrafPath, output: 'removed with exclusions (' + excludedChildren.length + ')' }) :
           results.push({ path: rimrafPath, output: 'removed' });
